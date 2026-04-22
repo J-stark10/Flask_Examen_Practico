@@ -1,0 +1,81 @@
+{% extends "base.html" %} {% block content %}
+
+<!-- Cabezera -->
+<div
+  class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom"
+>
+  <div>
+    <h5 class="mb-0 fw-semibold">Editar Producto</h5>
+    <small class="text-secondary"
+      >ID #{{ producto.id }} — {{ producto.nombre }}</small
+    >
+  </div>
+</div>
+
+<!-- Bootstrap Formulario Actualización-->
+<div class="card border-0 shadow-sm" style="max-width: 560px">
+  <div class="card-body p-4">
+    <form action="/update" method="POST">
+      <input type="hidden" name="id" value="{{ producto.id }}" />
+
+      <div class="mb-3">
+        <label class="form-label text-secondary small">NOMBRE</label>
+        <input
+          type="text"
+          name="nombre"
+          class="form-control"
+          value="{{ producto.nombre }}"
+          required
+        />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label text-secondary small">CATEGORÍA</label>
+        <input
+          type="text"
+          name="categoria"
+          class="form-control"
+          value="{{ producto.categoria }}"
+          required
+        />
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-6">
+          <label class="form-label text-secondary small">PRECIO (Bs.)</label>
+          <input
+            type="number"
+            name="precio"
+            step="0.01"
+            min="0"
+            class="form-control"
+            value="{{ producto.precio }}"
+            required
+          />
+        </div>
+        <div class="col-6">
+          <label class="form-label text-secondary small">STOCK</label>
+          <input
+            type="number"
+            name="stock"
+            min="0"
+            class="form-control"
+            value="{{ producto.stock }}"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="d-flex gap-2 pt-3 border-top">
+        <button type="submit" class="btn btn-primary">
+          <i class="bi bi-check-lg me-1"></i> Actualizar
+        </button>
+        <a href="/" class="btn btn-outline-secondary">
+          <i class="bi bi-x-lg me-1"></i> Cancelar
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
