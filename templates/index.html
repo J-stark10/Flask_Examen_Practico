@@ -1,0 +1,86 @@
+{% extends "base.html" %} {% block content %}
+
+<!-- Page header -->
+<div
+  class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom"
+>
+  <div>
+    <h5 class="mb-0 fw-semibold">Productos</h5>
+    <small class="text-secondary"
+      >{{ productos|length }} registro(s) en inventario</small
+    >
+  </div>
+  <a href="/create" class="btn btn-primary">
+    <i class="bi bi-plus-lg me-1"></i> Nuevo Producto
+  </a>
+</div>
+
+<!-- Bootstrap Card + Table -->
+<div class="card border-0 shadow-sm">
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-hover table-borderless mb-0 align-middle">
+        <thead class="table-dark border-bottom">
+          <tr>
+            <th class="text-secondary ps-3">#</th>
+            <th class="text-secondary">Nombre</th>
+            <th class="text-secondary">Categoría</th>
+            <th class="text-secondary">Precio</th>
+            <th class="text-secondary">Stock</th>
+            <th class="text-secondary text-end pe-3">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if productos %} {% for p in productos %}
+          <tr>
+            <td class="ps-3 text-secondary">{{ p.id }}</td>
+            <td class="fw-medium">{{ p.nombre }}</td>
+            <td>
+              <span
+                class="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-25"
+              >
+                {{ p.categoria }}
+              </span>
+            </td>
+            <td class="text-success fw-medium">
+              Bs. {{ "%.2f"|format(p.precio) }}
+            </td>
+            <td>
+              <span
+                class="fw-medium {% if p.stock <= 5 %}text-danger {% elif p.stock <= 20 %}text-warning {% else %}text-success{% endif %}"
+              >
+                {{ p.stock }}
+              </span>
+            </td>
+            <td class="text-end pe-3">
+              <a
+                href="/edit/{{ p.id }}"
+                class="btn btn-outline-primary btn-sm me-1"
+              >
+                <i class="bi bi-pencil me-1"></i> Editar
+              </a>
+              <a
+                href="/delete/{{ p.id }}"
+                class="btn btn-outline-danger btn-sm"
+                onclick="return confirm('¿Eliminar {{ p.nombre }}?')"
+              >
+                <i class="bi bi-trash me-1"></i> Eliminar
+              </a>
+            </td>
+          </tr>
+          {% endfor %} {% else %}
+          <tr>
+            <td colspan="6" class="text-center text-secondary py-5">
+              <i class="bi bi-inbox display-6 d-block mb-2 opacity-25"></i>
+              Sin productos registrados.
+              <a href="/create" class="text-primary">Agrega uno.</a>
+            </td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
